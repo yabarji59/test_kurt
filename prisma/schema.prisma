@@ -114,10 +114,18 @@ model utilisateur {
   telephone      String?         @db.VarChar(50)
   nationalite    String?         @db.VarChar(50)
   adresse        String?         @db.VarChar(50)
-  role           String?         @db.VarChar(50)
+  role           role            @default(jeune)
   administrateur administrateur?
   conseiller     conseiller?
   gere           gere[]
   jeune          jeune?
   moderateur     moderateur?
+}
+
+// enum role
+enum role {
+  administrateur
+  conseiller
+  jeune
+  moderateur
 }
