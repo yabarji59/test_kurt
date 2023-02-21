@@ -6,7 +6,7 @@ services:
     build:
         context: .
         dockerfile: Dockerfile
-    image: nest/mlv
+    image: nest/mlv:v1
     restart: always
     ports:
       - '3000:3000'
