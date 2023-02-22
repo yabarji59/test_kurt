@@ -73,8 +73,8 @@ model peut_gerer {
 model post {
   id               Int          @id @default(autoincrement())
   titre            String?      @db.VarChar(50)
-  date_creation    String?      @db.VarChar(50)
-  date_suppression String?      @db.VarChar(50)
+  date_creation    DateTime?    @db.Date
+  date_suppression DateTime?    @db.Date
   url_img          String?      @db.VarChar(50)
   img_description  String?      @db.VarChar(50)
   img_titre        String?      @db.VarChar(50)
@@ -109,7 +109,7 @@ model utilisateur {
   email          String?         @db.VarChar(50)
   nom            String?         @db.VarChar(50)
   prenom         String?         @db.VarChar(50)
-  date_naissance String?         @db.VarChar(50)
+  date_naissance DateTime?       @db.Date
   mot_de_passe   String?         @db.VarChar(50)
   telephone      String?         @db.VarChar(50)
   nationalite    String?         @db.VarChar(50)

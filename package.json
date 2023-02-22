@@ -1,7 +1,7 @@
 {
   "name": "back",
   "version": "0.0.1",
-  "description": "",
+  "description": "<p align=\"center\">   <a href=\"http://nestjs.com/\" target=\"blank\"><img src=\"https://nestjs.com/img/logo-small.svg\" width=\"200\" alt=\"Nest Logo\" /></a> </p>",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
@@ -25,6 +25,8 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
     "class-validator": "^0.14.0",
+    "@nestjs/swagger": "^6.2.1",
+    "@prisma/client": "^4.10.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
   },
@@ -68,5 +70,10 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "main": ".eslintrc.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
   }
 }
