@@ -17,7 +17,7 @@ export class UtilisateursController {
 
   @Post()
   create(@Body() createUtilisateurDto: CreateUtilisateurDto) {
-    return this.utilisateursService.createUser(createUtilisateurDto);
+    return this.utilisateursService.createUtilisateur(createUtilisateurDto);
   }
 
   @Get()
