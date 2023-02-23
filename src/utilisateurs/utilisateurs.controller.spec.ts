@@ -93,4 +93,23 @@ describe('UtilisateursController', () => {
       expect(service.update).toHaveBeenCalledWith(1, dto);
     });
   });
+  describe('remove', () => {
+    const dto: CreateUtilisateurDto = {
+      email: 'test@example.com',
+      nom: 'Test',
+      prenom: 'User',
+      date_naissance: new Date('1990-01-01'),
+      mot_de_passe: 'password',
+      telephone: '1234567890',
+      nationalite: 'France',
+      adresse: '1 rue de la Test',
+    };
+
+    it('should delete the  user', async () => {
+      const deletedUser = { id: 1, ...dto };
+      (service.remove as jest.Mock).mockResolvedValue(deletedUser);
+      expect(await controller.remove('1')).toEqual(deletedUser);
+      expect(service.remove).toHaveBeenCalledWith(1);
+    });
+  });
 });

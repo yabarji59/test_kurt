@@ -10,6 +10,7 @@ import {
 import { UtilisateursService } from './utilisateurs.service';
 import { CreateUtilisateurDto } from './dto/create-utilisateur.dto';
 import { UpdateUtilisateurDto } from './dto/update-utilisateur.dto';
+import { UpdatePasswordUtilisateurDto } from './dto/update-password-utilisateur.dto';
 
 @Controller('utilisateurs')
 export class UtilisateursController {
@@ -41,5 +42,12 @@ export class UtilisateursController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.utilisateursService.remove(+id);
+  }
+  @Patch(':id/change_password')
+  changePassword(
+    @Param('id') id: string,
+    @Body() updateUtilisateurDto: UpdatePasswordUtilisateurDto,
+  ) {
+    return this.utilisateursService.updatePassword(+id, updateUtilisateurDto);
   }
 }
