@@ -2,83 +2,83 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateArticleDto {
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  id: number;
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsNumber()
+  // id: number;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+  // @IsNotEmpty()
+  // @IsString()
   titre: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsDate()
+  // @IsNotEmpty()
+  // @IsDate()
   date_creation: Date;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsDate()
+  // @IsNotEmpty()
+  // @IsDate()
   date_suppression: Date;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+  // @IsNotEmpty()
+  // @IsString()
   url_img: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+  // @IsNotEmpty()
+  // @IsString()
   img_description: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+  // @IsNotEmpty()
+  // @IsString()
   img_titre: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+  // @IsNotEmpty()
+  // @IsString()
   sous_titre: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+  // @IsNotEmpty()
+  // @IsString()
   contenu: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+  // @IsNotEmpty()
+  // @IsString()
   description: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+  // @IsNotEmpty()
+  // @IsString()
   meta_title: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+  // @IsNotEmpty()
+  // @IsString()
   categories: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+  // @IsNotEmpty()
+  // @IsString()
   url_video: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+  // @IsNotEmpty()
+  // @IsString()
   slug: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+  // @IsNotEmpty()
+  // @IsString()
   tags: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
+  // @IsNotEmpty()
+  // @IsString()
   status: string;
 }

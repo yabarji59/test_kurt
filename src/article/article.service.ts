@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { Article } from './entities/article.entity';
 
 @Injectable()
 export class ArticleService {
@@ -9,9 +10,7 @@ export class ArticleService {
 
   async create(createArticleDto: CreateArticleDto) {
     return await this.prisma.post.create({
-      data: {
-        ...createArticleDto,
-      },
+      data: createArticleDto,
     });
   }
 
