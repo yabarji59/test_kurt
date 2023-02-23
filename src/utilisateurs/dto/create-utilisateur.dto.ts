@@ -20,9 +20,4 @@ export class CreateUtilisateurDto {
     description: 'Adresse postale',
   })
   adresse: string;
-  @ApiProperty({
-    enum: RolesEnum,
-    enumName: 'RolesEnum',
-  })
-  role: RolesEnum.jeune;
 }

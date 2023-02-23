@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_TEST_URL")
+}
+
+model administrateur {
+  id          Int         @id
+  utilisateur utilisateur @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  gere        gere[]
+}
+
+model conseiller {
+  id            Int             @id
+  utilisateur   utilisateur     @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  est_attribuer est_attribuer[]
+  redige        redige[]
+}
+
+model est_attribuer {
+  id_jeune      Int
+  id_conseiller Int
+  conseiller    conseiller @relation(fields: [id_conseiller], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  jeune         jeune      @relation(fields: [id_jeune], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id_jeune, id_conseiller])
+}
+
+model gere {
+  id_administrateur Int
+  id_utilisateur    Int
+  administrateur    administrateur @relation(fields: [id_administrateur], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  utilisateur       utilisateur    @relation(fields: [id_utilisateur], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id_administrateur, id_utilisateur])
+}
+
+model inscrit {
+  id_jeune Int
+  id_post  Int
+  jeune    jeune @relation(fields: [id_jeune], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  post     post  @relation(fields: [id_post], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id_jeune, id_post])
+}
+
+model jeune {
+  id            Int             @id
+  est_attribuer est_attribuer[]
+  inscrit       inscrit[]
+  utilisateur   utilisateur     @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model moderateur {
+  id          Int          @id
+  utilisateur utilisateur  @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  peut_gerer  peut_gerer[]
+  redige      redige[]
+}
+
+model peut_gerer {
+  id_moderateur Int
+  id_post       Int
+  moderateur    moderateur @relation(fields: [id_moderateur], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  post          post       @relation(fields: [id_post], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id_moderateur, id_post])
+}
+
+model post {
+  id               Int          @id @default(autoincrement())
+  titre            String?      @db.VarChar(50)
+  date_creation    DateTime?    @db.Date
+  date_suppression DateTime?    @db.Date
+  url_img          String?      @db.VarChar(50)
+  img_description  String?      @db.VarChar(50)
+  img_titre        String?      @db.VarChar(50)
+  sous_titre       String?      @db.VarChar(50)
+  contenu          String?      @db.VarChar(250)
+  description      String?      @db.VarChar(250)
+  meta_title       String?      @db.VarChar(50)
+  categories       String?      @db.VarChar(50)
+  url_video        String?      @db.VarChar(350)
+  slug             String?      @db.VarChar(50)
+  tags             String?      @db.VarChar(50)
+  status           String?      @db.VarChar(50)
+  inscrit          inscrit[]
+  peut_gerer       peut_gerer[]
+  redige           redige[]
+}
+
+model redige {
+  id_conseiller Int
+  id_moderateur Int
+  id_post       Int
+  conseiller    conseiller @relation(fields: [id_conseiller], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  moderateur    moderateur @relation(fields: [id_moderateur], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  post          post       @relation(fields: [id_post], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id_conseiller, id_moderateur, id_post])
+}
+
+enum role {
+  administrateur
+  conseiller
+  jeune
+  moderateur
+}
+
+model utilisateur {
+  id             Int             @id @unique @default(autoincrement())
+  uuid           String          @unique @db.VarChar(50)
+  email          String          @unique @db.VarChar(50)
+  nom            String          @db.VarChar(50)
+  prenom         String          @db.VarChar(50)
+  date_naissance DateTime        @db.Date
+  mot_de_passe   String          @db.VarChar(250)
+  telephone      String          @db.VarChar(50)
+  nationalite    String          @db.VarChar(50)
+  adresse        String          @db.VarChar(50)
+  role           role            @default(jeune)
+  administrateur administrateur?
+  conseiller     conseiller?
+  gere           gere[]
+  jeune          jeune?
+  moderateur     moderateur?
+}

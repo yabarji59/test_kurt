@@ -7,8 +7,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('Bank Root API')
-    .setDescription('The Bankroot API description')
+    .setTitle('MLV API')
+    .setDescription('The MLV  API description')
     .setVersion('0.1')
     .build();
 
