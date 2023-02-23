@@ -13,7 +13,7 @@ import { UpdateArticleDto } from './dto/update-article.dto';
 
 @Controller('article')
 export class ArticleController {
-  constructor(private readonly articleService: ArticleService) {}
+  constructor(private articleService: ArticleService) {}
 
   @Post('create-article')
   create(@Body() createArticleDto: CreateArticleDto) {
