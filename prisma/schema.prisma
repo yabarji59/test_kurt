@@ -81,7 +81,7 @@ model post {
   img_description  String?      @db.VarChar(50)
   img_titre        String?      @db.VarChar(50)
   sous_titre       String?      @db.VarChar(50)
-  contenu          String?
+  contenu          String?      @db.VarChar(250)
   description      String?      @db.VarChar(250)
   meta_title       String?      @db.VarChar(50)
   categories       String?      @db.VarChar(50)
@@ -126,29 +126,28 @@ model redige {
   @@id([id_conseiller, id_moderateur, id_post])
 }
 
+enum role {
+  administrateur
+  conseiller
+  jeune
+  moderateur
+}
+
 model utilisateur {
-  id             Int             @id @default(autoincrement())
-  uuid           String?         @db.VarChar(50)
-  email          String?         @db.VarChar(50)
-  nom            String?         @db.VarChar(50)
-  prenom         String?         @db.VarChar(50)
-  date_naissance DateTime?       @db.Date
-  mot_de_passe   String?         @db.VarChar(50)
-  telephone      String?         @db.VarChar(50)
-  nationalite    String?         @db.VarChar(50)
-  adresse        String?         @db.VarChar(50)
+  id             Int             @id @unique @default(autoincrement())
+  uuid           String          @unique @db.VarChar(50)
+  email          String          @unique @db.VarChar(50)
+  nom            String          @db.VarChar(50)
+  prenom         String          @db.VarChar(50)
+  date_naissance DateTime        @db.Date
+  mot_de_passe   String          @db.VarChar(250)
+  telephone      String          @db.VarChar(50)
+  nationalite    String          @db.VarChar(50)
+  adresse        String          @db.VarChar(50)
   role           role            @default(jeune)
   administrateur administrateur?
   conseiller     conseiller?
   gere           gere[]
   jeune          jeune?
   moderateur     moderateur?
-}
-
-// enum role
-enum role {
-  administrateur
-  conseiller
-  jeune
-  moderateur
 }
