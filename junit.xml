@@ -1,27 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="9" failures="0" errors="0" time="2.52">
-  <testsuite name="AppController" errors="0" failures="0" skipped="0" timestamp="2023-02-23T08:50:29" time="1.533" tests="1">
+<testsuites name="jest tests" tests="14" failures="0" errors="0" time="3.957">
+  <testsuite name="AppController" errors="0" failures="0" skipped="0" timestamp="2023-02-23T10:16:28" time="2.383" tests="1">
     <testcase classname="AppController root should return &quot;Hello World!&quot;" name="AppController root should return &quot;Hello World!&quot;" time="0.006">
     </testcase>
   </testsuite>
-  <testsuite name="UtilisateursController" errors="0" failures="0" skipped="0" timestamp="2023-02-23T08:50:29" time="1.92" tests="4">
+  <testsuite name="PrismaClientExceptionFilter" errors="0" failures="0" skipped="0" timestamp="2023-02-23T10:16:28" time="2.417" tests="1">
+    <testcase classname="PrismaClientExceptionFilter should be defined" name="PrismaClientExceptionFilter should be defined" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="UtilisateursController" errors="0" failures="0" skipped="0" timestamp="2023-02-23T10:16:28" time="2.784" tests="5">
     <testcase classname="UtilisateursController create should return the created user" name="UtilisateursController create should return the created user" time="0.006">
     </testcase>
-    <testcase classname="UtilisateursController findAll should return an array of users" name="UtilisateursController findAll should return an array of users" time="0.001">
+    <testcase classname="UtilisateursController findAll should return an array of users" name="UtilisateursController findAll should return an array of users" time="0.002">
     </testcase>
-    <testcase classname="UtilisateursController findOne should return a user with the specified id" name="UtilisateursController findOne should return a user with the specified id" time="0.002">
+    <testcase classname="UtilisateursController findOne should return a user with the specified id" name="UtilisateursController findOne should return a user with the specified id" time="0.001">
     </testcase>
     <testcase classname="UtilisateursController update should return the updated user" name="UtilisateursController update should return the updated user" time="0.001">
     </testcase>
+    <testcase classname="UtilisateursController remove should delete the  user" name="UtilisateursController remove should delete the  user" time="0.001">
+    </testcase>
   </testsuite>
-  <testsuite name="UtilisateursService" errors="0" failures="0" skipped="0" timestamp="2023-02-23T08:50:29" time="2.352" tests="4">
-    <testcase classname="UtilisateursService createUtilisateur should create a new user with hashed password" name="UtilisateursService createUtilisateur should create a new user with hashed password" time="0.254">
+  <testsuite name="UtilisateursService" errors="0" failures="0" skipped="0" timestamp="2023-02-23T10:16:28" time="3.753" tests="7">
+    <testcase classname="UtilisateursService createUtilisateur should create a new user with hashed password" name="UtilisateursService createUtilisateur should create a new user with hashed password" time="0.259">
     </testcase>
-    <testcase classname="UtilisateursService findMany should return an array of users" name="UtilisateursService findMany should return an array of users" time="0.151">
+    <testcase classname="UtilisateursService findMany should return an array of users" name="UtilisateursService findMany should return an array of users" time="0.143">
     </testcase>
-    <testcase classname="UtilisateursService findMany findOne should return the user with the specified id" name="UtilisateursService findMany findOne should return the user with the specified id" time="0.08">
+    <testcase classname="UtilisateursService findMany findOne should return the user with the specified id" name="UtilisateursService findMany findOne should return the user with the specified id" time="0.073">
     </testcase>
-    <testcase classname="UtilisateursService findMany deleteUtilisateur should delete the user with the specified id" name="UtilisateursService findMany deleteUtilisateur should delete the user with the specified id" time="0.084">
+    <testcase classname="UtilisateursService findMany deleteUtilisateur should delete the user with the specified id" name="UtilisateursService findMany deleteUtilisateur should delete the user with the specified id" time="0.079">
+    </testcase>
+    <testcase classname="UtilisateursService updatePassword should update the password of the user with the specified id" name="UtilisateursService updatePassword should update the password of the user with the specified id" time="0.248">
+    </testcase>
+    <testcase classname="UtilisateursService updatePassword should throw an error if the user is not found" name="UtilisateursService updatePassword should throw an error if the user is not found" time="0.077">
+    </testcase>
+    <testcase classname="UtilisateursService updatePassword should throw an error if the current password is incorrect" name="UtilisateursService updatePassword should throw an error if the current password is incorrect" time="0.132">
     </testcase>
   </testsuite>
 </testsuites>

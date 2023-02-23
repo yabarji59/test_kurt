@@ -20,10 +20,4 @@ export class Utilisateur {
 
   @Column()
   role: string;
-
-  @Column()
-  date_creation: Date;
-
-  @Column()
-  date_modification: Date;
 }
