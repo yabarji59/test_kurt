@@ -30,6 +30,25 @@ export class PagesService {
     return page;
   }
 
+
+@Injectable()
+export class PagesService {
+  create(createPageDto: CreatePageDto) {
+    return 'This action adds a new page';
+  }
+
+  findAll() {
+    return `This action returns all pages`;
+  }
+
+<<<<<<< HEAD
+  findOne(id: number) {
+    return `This action returns a #${id} page`;
+  }
+
+  update(id: number, updatePageDto: UpdatePageDto) {
+    return `This action updates a #${id} page`;
+=======
   async update(id: number, updatePageDto: UpdatePageDto): Promise<page> {
     const page = await this.prisma.page.findUnique({
       where: { id },
@@ -42,6 +61,7 @@ export class PagesService {
       data: updatePageDto,
     });
     return updatePage;
+>>>>>>> c3e9ee3 (feat: add update and remove method in pages.service)
   }
 
   async remove(id: number): Promise<page> {
