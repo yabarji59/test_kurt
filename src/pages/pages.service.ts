@@ -30,9 +30,28 @@ export class PagesService {
     return page;
   }
 
-  async update(id: number, updatePageDto: UpdatePageDto): Promise<page> {}
+  async update(id: number, updatePageDto: UpdatePageDto): Promise<page> {
+    const page = await this.prisma.page.findUnique({
+      where: { id },
+    });
+    if (!page) {
+      throw new NotFoundException(`Page with ID ${id} not found`);
+    }
+    const updatePage = await this.prisma.page.update({
+      where: { id },
+      data: updatePageDto,
+    });
+    return updatePage;
+  }
 
-  remove(id: number) {
-    return `This action removes a #${id} page`;
+  async remove(id: number): Promise<page> {
+    const page = await this.prisma.page.findUnique({
+      where: { id },
+    });
+    if (!page) {
+      throw new NotFoundException(`Page with ID ${id} not found`);
+    }
+    const deletedPage = await this.prisma.page.delete({ where: { id } });
+    return deletedPage;
   }
 }
