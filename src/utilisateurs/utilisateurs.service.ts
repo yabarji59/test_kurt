@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { CreateUtilisateurDto } from './dto/create-utilisateur.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { pick } from 'lodash';
+import { UpdatePasswordUtilisateurDto } from './dto/update-password-utilisateur.dto';
 
 // Constantes
 const allowedFields = [
@@ -87,5 +88,32 @@ export class UtilisateursService {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
     await this.prisma.utilisateur.delete({ where: { id } });
+  }
+
+  //changer le mot de passe d'un utilisateur et verifier que l'ancien mot de passe est correct
+  async updatePassword(
+    id: number,
+    updatePasswordUtilisateurDto: UpdatePasswordUtilisateurDto,
+  ): Promise<Utilisateur> {
+    const user = await this.prisma.utilisateur.findUnique({ where: { id } });
+    if (!user) {
+      throw new NotFoundException(USER_NOT_FOUND_ERROR(id));
+    }
+    const isPasswordMatch = await bcrypt.compare(
+      updatePasswordUtilisateurDto.ancien_mot_de_passe,
+      user.mot_de_passe,
+    );
+    if (!isPasswordMatch) {
+      throw new NotFoundException('Old password is incorrect');
+    }
+    const salt = await bcrypt.genSalt(SaltLength.Default);
+    const hashedPassword = await bcrypt.hash(
+      updatePasswordUtilisateurDto.nouveau_mot_de_passe,
+      salt,
+    );
+    return this.prisma.utilisateur.update({
+      where: { id },
+      data: { mot_de_passe: hashedPassword },
+    });
   }
 }
