@@ -4,15 +4,13 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_TEST_URL")
 }
 
 model administrateur {
   id          Int         @id
   utilisateur utilisateur @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   gere        gere[]
-  creer       creer[]
-  page        page[]
 }
 
 model conseiller {
@@ -92,27 +90,6 @@ model post {
   inscrit          inscrit[]
   peut_gerer       peut_gerer[]
   redige           redige[]
-}
-
-model page {
-  id               Int             @id @default(autoincrement())
-  contenu          String?
-  url_img          String?         @db.VarChar(50)
-  url_video        String?         @db.VarChar(50)
-  meta_title       String?         @db.VarChar(50)
-  tags             String?         @db.VarChar(50)
-  administrateur   administrateur? @relation(fields: [administrateurId], references: [id])
-  administrateurId Int?
-  creer            creer[]
-}
-
-model creer {
-  id_page           Int
-  id_administrateur Int
-  administrateur    administrateur @relation(fields: [id_administrateur], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  page              page           @relation(fields: [id_page], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@id([id_administrateur, id_page])
 }
 
 model redige {

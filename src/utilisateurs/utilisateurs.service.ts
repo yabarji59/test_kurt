@@ -1,35 +1,91 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateUtilisateurDto } from './dto/update-utilisateur.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { Prisma, utilisateur } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
+import { utilisateur } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 import { CreateUtilisateurDto } from './dto/create-utilisateur.dto';
+import { v4 as uuidv4 } from 'uuid';
+import { pick } from 'lodash';
+
+// Constantes
+const allowedFields = [
+  'nom',
+  'prenom',
+  'email',
+  'telephone',
+  'adresse',
+  'nationalite',
+];
+const USER_NOT_FOUND_ERROR = (id: number) => `User with ID ${id} not found`;
+
+// Interfaces
+type Utilisateur = utilisateur;
+
+// Enums
+enum SaltLength {
+  Default = 10,
+}
 
 @Injectable()
 export class UtilisateursService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
-  async createUser(data: Prisma.utilisateurCreateInput): Promise<utilisateur> {
+  // Créer un utilisateur
+  async createUtilisateur(
+    createUtilisateurDto: CreateUtilisateurDto,
+  ): Promise<Utilisateur> {
+    const salt = await bcrypt.genSalt(SaltLength.Default);
+    const hashedPassword = await bcrypt.hash(
+      createUtilisateurDto.mot_de_passe,
+      salt,
+    );
     return this.prisma.utilisateur.create({
-      data,
+      data: {
+        ...createUtilisateurDto,
+        mot_de_passe: hashedPassword,
+        uuid: uuidv4(),
+      },
     });
   }
-  create(createUtilisateurDto: CreateUtilisateurDto) {
-    return this.createUser(createUtilisateurDto);
+
+  // Trouver un utilisateur par ID
+  async findOne(id: number): Promise<Utilisateur> {
+    const user = await this.prisma.utilisateur.findUnique({ where: { id } });
+    if (!user) {
+      throw new NotFoundException(USER_NOT_FOUND_ERROR(id));
+    }
+    return user;
   }
 
-  findAll() {
-    return `This action returns all utilisateurs`;
+  // Trouver tous les utilisateurs
+  async findAll(): Promise<Utilisateur[]> {
+    return this.prisma.utilisateur.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} utilisateur`;
+  // Mettre à jour un utilisateur
+  async update(
+    id: number,
+    updateUtilisateurDto: UpdateUtilisateurDto,
+  ): Promise<Utilisateur> {
+    const user = await this.prisma.utilisateur.findUnique({ where: { id } });
+    if (!user) {
+      throw new NotFoundException(USER_NOT_FOUND_ERROR(id));
+    }
+
+    const userData = pick(updateUtilisateurDto, allowedFields);
+
+    return this.prisma.utilisateur.update({
+      where: { id },
+      data: { ...userData },
+    });
   }
 
-  update(id: number, updateUtilisateurDto: UpdateUtilisateurDto) {
-    return `This action updates a #${id} utilisateur`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} utilisateur`;
+  // Supprimer un utilisateur
+  async remove(id: number): Promise<void> {
+    const user = await this.prisma.utilisateur.findUnique({ where: { id } });
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+    await this.prisma.utilisateur.delete({ where: { id } });
   }
 }

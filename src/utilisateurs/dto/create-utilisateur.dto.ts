@@ -16,8 +16,8 @@ export class CreateUtilisateurDto {
   telephone: string;
   @ApiProperty()
   nationalite: string;
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Adresse postale',
+  })
   adresse: string;
-  @ApiProperty()
-  role: RolesEnum;
 }
