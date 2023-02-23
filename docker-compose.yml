@@ -6,7 +6,11 @@ services:
     build:
         context: .
         dockerfile: Dockerfile
+<<<<<<< HEAD
     image: nest/mlv:v1
+=======
+    image: nest/mlv
+>>>>>>> 751bc1a (feat(build) : add docker-compose.yml , add prisma and generate project)
     restart: always
     ports:
       - '3000:3000'

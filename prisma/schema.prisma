@@ -11,8 +11,11 @@ model administrateur {
   id          Int         @id
   utilisateur utilisateur @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   gere        gere[]
+<<<<<<< HEAD
   creer       creer[]
   page        page[]
+=======
+>>>>>>> 751bc1a (feat(build) : add docker-compose.yml , add prisma and generate project)
 }
 
 model conseiller {
@@ -75,13 +78,22 @@ model peut_gerer {
 model post {
   id               Int          @id @default(autoincrement())
   titre            String?      @db.VarChar(50)
+<<<<<<< HEAD
   date_creation    DateTime?    @db.Date
   date_suppression DateTime?    @db.Date
+=======
+  date_creation    String?      @db.VarChar(50)
+  date_suppression String?      @db.VarChar(50)
+>>>>>>> 751bc1a (feat(build) : add docker-compose.yml , add prisma and generate project)
   url_img          String?      @db.VarChar(50)
   img_description  String?      @db.VarChar(50)
   img_titre        String?      @db.VarChar(50)
   sous_titre       String?      @db.VarChar(50)
+<<<<<<< HEAD
   contenu          String?      @db.VarChar(250)
+=======
+  contenu          String?
+>>>>>>> 751bc1a (feat(build) : add docker-compose.yml , add prisma and generate project)
   description      String?      @db.VarChar(250)
   meta_title       String?      @db.VarChar(50)
   categories       String?      @db.VarChar(50)
@@ -94,6 +106,7 @@ model post {
   redige           redige[]
 }
 
+<<<<<<< HEAD
 model page {
   id               Int             @id @default(autoincrement())
   contenu          String?
@@ -115,6 +128,8 @@ model creer {
   @@id([id_administrateur, id_page])
 }
 
+=======
+>>>>>>> 751bc1a (feat(build) : add docker-compose.yml , add prisma and generate project)
 model redige {
   id_conseiller Int
   id_moderateur Int
@@ -126,6 +141,7 @@ model redige {
   @@id([id_conseiller, id_moderateur, id_post])
 }
 
+<<<<<<< HEAD
 enum role {
   administrateur
   conseiller
@@ -145,6 +161,20 @@ model utilisateur {
   nationalite    String          @db.VarChar(50)
   adresse        String          @db.VarChar(50)
   role           role            @default(jeune)
+=======
+model utilisateur {
+  id             Int             @id @default(autoincrement())
+  uuid           String?         @db.VarChar(50)
+  email          String?         @db.VarChar(50)
+  nom            String?         @db.VarChar(50)
+  prenom         String?         @db.VarChar(50)
+  date_naissance String?         @db.VarChar(50)
+  mot_de_passe   String?         @db.VarChar(50)
+  telephone      String?         @db.VarChar(50)
+  nationalite    String?         @db.VarChar(50)
+  adresse        String?         @db.VarChar(50)
+  role           String?         @db.VarChar(50)
+>>>>>>> 751bc1a (feat(build) : add docker-compose.yml , add prisma and generate project)
   administrateur administrateur?
   conseiller     conseiller?
   gere           gere[]

@@ -127,4 +127,8 @@ dist
 .yarn/cache
 .yarn/unplugged
 .yarn/build-state.yml
+<<<<<<< HEAD
+=======
+.yarn/install-state.gz
+>>>>>>> 751bc1a (feat(build) : add docker-compose.yml , add prisma and generate project)
 .pnp.*
