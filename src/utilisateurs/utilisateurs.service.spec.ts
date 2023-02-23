@@ -5,7 +5,13 @@ import { PrismaClient, utilisateur } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { CreateUtilisateurDto } from './dto/create-utilisateur.dto';
 import { v4 as uuidv4 } from 'uuid';
-import { NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { UpdatePasswordUtilisateurDto } from './dto/update-password-utilisateur.dto';
+import { Utilisateur } from './entities/utilisateur.entity';
+
+function USER_NOT_FOUND_ERROR(id: number) {
+  return `User with ID ${id} not found`;
+}
 
 describe('UtilisateursService', () => {
   let service: UtilisateursService;
@@ -145,6 +151,77 @@ describe('UtilisateursService', () => {
         }
         expect(foundUser).toBeUndefined();
       });
+    });
+  });
+  describe('updatePassword', () => {
+    let createdUser;
+    const newPassword = 'newPassword';
+
+    beforeEach(async () => {
+      const createUserDto: CreateUtilisateurDto = {
+        email: 'test@example.com',
+        nom: 'John',
+        prenom: 'Doe',
+        date_naissance: new Date('1990-01-01'),
+        mot_de_passe: 'password',
+        telephone: '1234567890',
+        nationalite: 'France',
+        adresse: '123 Main St',
+      };
+      createdUser = await service.createUtilisateur(createUserDto);
+    });
+
+    it('should update the password of the user with the specified id', async () => {
+      const updatePasswordDto: UpdatePasswordUtilisateurDto = {
+        ancien_mot_de_passe: 'password',
+        nouveau_mot_de_passe: newPassword,
+      };
+
+      const updatedUser = await service.updatePassword(
+        +createdUser.id,
+        updatePasswordDto,
+      );
+
+      expect(updatedUser).toBeDefined();
+      expect(updatedUser.mot_de_passe).not.toEqual(createdUser.mot_de_passe);
+
+      const isPasswordMatch = await bcrypt.compare(
+        newPassword,
+        updatedUser.mot_de_passe,
+      );
+      expect(isPasswordMatch).toBeTruthy();
+    });
+
+    it('should throw an error if the user is not found', async () => {
+      const updatePasswordDto: UpdatePasswordUtilisateurDto = {
+        ancien_mot_de_passe: createdUser.mot_de_passe,
+        nouveau_mot_de_passe: newPassword,
+      };
+
+      const id = 999;
+
+      try {
+        await service.updatePassword(id, updatePasswordDto);
+        fail('Expected NotFoundException to be thrown');
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException);
+        expect(error.message).toEqual(USER_NOT_FOUND_ERROR(id));
+      }
+    });
+
+    it('should throw an error if the current password is incorrect', async () => {
+      const updatePasswordDto: UpdatePasswordUtilisateurDto = {
+        ancien_mot_de_passe: 'wrongPassword',
+        nouveau_mot_de_passe: newPassword,
+      };
+
+      try {
+        await service.updatePassword(+createdUser.id, updatePasswordDto);
+        fail('Expected NotFoundException to be thrown');
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException);
+        expect(error.message).toEqual('Old password is incorrect');
+      }
     });
   });
 });
