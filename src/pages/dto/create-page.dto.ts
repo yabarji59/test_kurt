@@ -2,9 +2,8 @@ import { ApiProperty} from "@nestjs/swagger";
 
 
 export class CreatePageDto {
-    uuid: string;
-    content: string;
+    @ApiProperty()
+    contenu: string;
     image: string;
     linkUrl: string;
-
 }
